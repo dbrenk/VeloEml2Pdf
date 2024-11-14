@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class VeloEml2PdfCli {
     /**
-     * java -jar veloEml2Pdf-1.0-SNAPSHOT.jar -velocityTemplateFilePath "src/main/resources/emlTemplateV2.html" -inputFileEmlPath "src/main/resources/Test_MailMitPDFAnhang_vonDICEI.eml" -outputFilePdfPath "Test_1.pdf"
+     * java -jar veloEml2Pdf-1.0-SNAPSHOT.jar -velocityTemplateFilePath "src/main/resources/emlTemplateV2.html" -inputFileEmlPath "src/main/resources/example-eml-files/mail.eml" -outputFilePdfPath "Test_1.pdf"
      * @param args
      */
     public static void main(String[] args) {
