@@ -1,0 +1,54 @@
+= License Summary
+
+This program uses several third-party libraries, each with its own licensing terms. Below is a summary of each library and its associated license:
+
+== Libraries and Licenses
+
+1. *JUnit (junit-jupiter-engine, version 5.8.1)*
+* License: Eclipse Public License 2.0
+* Description: A testing framework used for running unit tests.
+* Notes: Licensed under the Eclipse Public License, which permits use, modification, and distribution, as long as the original license is maintained.
+
+2. *Flying Saucer PDF (flying-saucer-pdf, version 9.10.2)*
+* License: LGPL 2.1 (GNU Lesser General Public License)
+* Description: A library for generating PDF documents from XHTML and CSS.
+* Notes: Allows modification and distribution under the LGPL. If modified, it may require source code disclosure of modifications made to the library.
+
+3. *Apache Velocity Engine (velocity-engine-core, version 2.4.1)*
+* License: Apache License 2.0
+* Description: A template engine that allows for dynamic content generation in applications.
+* Notes: The Apache License permits free use, modification, and distribution. Modifications must retain the original license and notices.
+
+4. *Apache Commons IO (commons-io, version 2.17.0)*
+* License: Apache License 2.0
+* Description: A utility library for I/O operations, simplifying file and stream handling in Java.
+* Notes: Licensed under the permissive Apache License, allowing use, modification, and redistribution with attribution.
+
+5. *JavaMail API (javax.mail, version 1.6.2)*
+* License: Dual License (CDDL-1.1 and GPL-2.0 with Classpath Exception)
+* Description: Provides a set of APIs for sending and receiving emails via Java.
+* Notes: You may choose between the CDDL or GPL with Classpath Exception, which allows linking this library without affecting the licensing of the main program.
+
+6. *Apache Commons Text (commons-text, version 1.12.0)*
+* License: Apache License 2.0
+* Description: A library providing utilities for text processing, including escaping, random string generation, and similarity scoring.
+* Notes: Permissively licensed under Apache License 2.0, allowing free use and modification with attribution.
+
+7. *Apache Commons CLI (commons-cli, version 1.5.0)*
+* License: Apache License 2.0
+* Description: A library for parsing command-line options, supporting both short and long options.
+* Notes: Licensed under the Apache License 2.0, allowing flexibility for commercial and open-source applications with minimal restrictions.
+
+== Summary of Licensing Requirements
+
+- *Apache License 2.0*: Allows use, modification, and distribution with attribution. Requires including the license text in distributions and indicating changes.
+- *Eclipse Public License 2.0*: Permits free use and redistribution. Modifications must retain the original license.
+- *LGPL 2.1*: Permits use and modification. Modifications made to the library itself may require source disclosure.
+- *CDDL or GPL with Classpath Exception*: Either license allows the program to use JavaMail API without affecting the program's overall license.
+
+== Compliance
+
+To comply with these licenses:
+- Include each library’s license text in your distribution package.
+- Attribute libraries with permissive licenses (Apache License, EPL).
+- For LGPL libraries, ensure any modifications to those libraries are disclosed as per LGPL requirements.
