@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Email Preview</title>
+</head>
+<body>
+
+<div>
+    <b>Subject:</b> ${mimeMessage.subject}
+</div>
+
+<div>
+    <b>From:</b> $emailFrom
+</div>
+
+<div>
+    <b>To:</b> $emailTo
+</div>
+
+<div>
+    <b>CC:</b> $emailCC
+</div>
+
+<div>
+    <b>Sent Date:</b> ${mimeMessage.getSentDate()}
+</div>
+
+<br/><br/>
+
+<div>
+    <b>Content:</b><br/>
+    <pre>$emailText</pre>
+</div>
+
+
+</body>
+</html>
