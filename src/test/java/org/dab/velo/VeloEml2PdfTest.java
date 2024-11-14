@@ -1,14 +1,15 @@
 package org.dab.velo;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import static org.junit.jupiter.api.Assertions.*;
 
 class VeloEml2PdfTest {
 
@@ -18,7 +19,7 @@ class VeloEml2PdfTest {
         String inputFileEmlPath = "src/main/resources/example-eml-files/[ENTWICKLUNG] Frist-Benachrichtigung [Vertrag  Dienstwagen] [V-2020-00015] [].eml";
         String outputFilePdfPath = FilenameUtils.getBaseName(inputFileEmlPath) + "_" +  new SimpleDateFormat("yyyyMMdd_HH-mm-ss").format(new Date()) + ".pdf";
         Boolean ok = VeloEml2Pdf.convertEml2Pdf(velocityTemplateFilePath, inputFileEmlPath, outputFilePdfPath);
-        assert ok : "error";
+        assertTrue(ok);
     }
 
     @Test
@@ -27,11 +28,12 @@ class VeloEml2PdfTest {
         String inputFileEmlPath = "src/main/resources/example-eml-files/[ENTWICKLUNG] Frist-Benachrichtigung [Vertrag  Dienstwagen] [V-2020-00015] [].eml";
         String outputFilePdfPath = FilenameUtils.getBaseName(inputFileEmlPath) + "_" +  new SimpleDateFormat("yyyyMMdd_HH-mm-ss").format(new Date()) + ".pdf";
         byte[] inputEml = FileUtils.readFileToByteArray(new File(inputFileEmlPath));
-        String velocityTemplateString = FileUtils.readFileToString(new File(velocityTemplateFilePath), Charsets.UTF_8);
+        String velocityTemplateString = FileUtils.readFileToString(new File(velocityTemplateFilePath), StandardCharsets.UTF_8);
         byte[] outputPdf = VeloEml2Pdf.convertEml2Pdf(velocityTemplateString, inputEml);
         File outputPdfFile = new File(outputFilePdfPath);
         FileUtils.writeByteArrayToFile(outputPdfFile, outputPdf);
-        assert (null != outputPdfFile && outputPdfFile.exists()) : "error";
+        assertNotNull(outputPdfFile);
+        assertTrue(outputPdfFile.exists());
     }
 
     @Test
@@ -40,6 +42,9 @@ class VeloEml2PdfTest {
         String inputFileEmlPath = "src/main/resources/example-eml-files/mail.eml";
         String outputFilePdfPath = FilenameUtils.getBaseName(inputFileEmlPath) + "_" +  new SimpleDateFormat("yyyyMMdd_HH-mm-ss").format(new Date()) + ".pdf";
         Boolean ok = VeloEml2Pdf.convertEml2Pdf(velocityTemplateFilePath, inputFileEmlPath, outputFilePdfPath);
-        assert ok : "error";
+        assertTrue(ok);
+        File outputPdfFile = new File(outputFilePdfPath);
+        assertNotNull(outputPdfFile);
+        assertTrue(outputPdfFile.exists());
     }
 }
