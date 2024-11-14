@@ -7,9 +7,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class EmailUtils {
+
+    public static final Pattern HTML_META_CHARSET_REGEX = Pattern.compile("(<meta(?!\\s*(?:name|value)\\s*=)[^>]*?charset\\s*=[\\s\"']*)([^\\s\"'/>]*)", Pattern.DOTALL);
 
     /**
      * reads in a byte[] of an .eml file and returns a javax MimeMessage object
@@ -71,7 +74,7 @@ public class EmailUtils {
             } else if (part.isMimeType("text/html")) {
                 // If the part is HTML, you may prefer to extract it or skip it, depending on your needs
                 // Uncomment the line below to prioritize HTML content over plain text
-                // return part.getContent().toString();
+                return part.getContent().toString();
             } else if (part.getContent() instanceof Multipart) {
                 // If the part itself is multipart, recurse into it
                 result.append(getTextFromMultipart((Multipart) part.getContent()));

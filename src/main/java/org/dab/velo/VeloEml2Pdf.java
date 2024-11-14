@@ -63,7 +63,11 @@ public class VeloEml2Pdf {
         context.put("emailTo", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailTo(mimeMessage)));
         context.put("emailCC", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailCC(mimeMessage)));
         context.put("emailSubject", StringEscapeUtils.escapeHtml4(mimeMessage.getSubject()));
-        context.put("emailText", StringEscapeUtils.escapeHtml4(EmailUtils.getTextFromMimeMessage(mimeMessage)));
+        //start FIX dab 2024-11-14 when trying to add HTML body to pdf without escaping, a SAXParseException is raised, because the <meta> tag is never closed.
+        String bodyText = EmailUtils.getTextFromMimeMessage(mimeMessage);
+        bodyText = bodyText.replaceAll("<meta[^>]*?>", "");
+        context.put("emailText", bodyText);
+        // end fix dab 2024-11-14
         context.put("mimeMessage", mimeMessage);
         // combine the template and the context information into an HTML representation
         String htmlDocument = evaluateVelocityTemplateAndContext(velocityTemplateString, context);
