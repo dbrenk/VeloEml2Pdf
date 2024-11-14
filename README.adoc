@@ -33,7 +33,7 @@ for command-line usage you have to add 3 parameters:
 
 [source,console]
 ----
-java -jar veloEml2Pdf-1.0-SNAPSHOT.jar -velocityTemplateFilePath "src/main/resources/emlTemplateV2.html" -inputFileEmlPath "src/main/resources/Test_MailMitPDFAnhang_vonDICEI.eml" -outputFilePdfPath "Test_1.pdf"
+java -jar veloEml2Pdf-1.0-SNAPSHOT.jar -velocityTemplateFilePath "src/main/resources/emlTemplateV2.html" -inputFileEmlPath "src/main/resources/example-eml-files/mail.eml" -outputFilePdfPath "Test_1.pdf"
 ----
 
 === License Summary
