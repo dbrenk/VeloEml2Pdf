@@ -16,21 +16,21 @@ public class VeloEml2PdfCli {
         // Define three required options (a, b, c)
         options.addOption(Option.builder("t")
                 .longOpt("velocityTemplateFilePath")
-                .desc("First parameter velocityTemplateFilePath (String)")
+                .desc("specify path to the velocity-template file")
                 .hasArg()
                 .required()
                 .build());
 
         options.addOption(Option.builder("i")
                 .longOpt("inputFileEmlPath")
-                .desc("Second parameter inputFileEmlPath (String)")
+                .desc("specify path to the input-eml file")
                 .hasArg()
                 .required()
                 .build());
 
         options.addOption(Option.builder("o")
                 .longOpt("outputFilePdfPath")
-                .desc("Third parameter outputFilePdfPath (String)")
+                .desc("specify output-path for the generated PDF")
                 .hasArg()
                 .required()
                 .build());
@@ -60,7 +60,7 @@ public class VeloEml2PdfCli {
             File out = new File(outputFilePdfPath);
             System.out.println("output.exists: " + out.exists() + " path: " + out.getAbsolutePath());
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             // Print an error message if parsing fails
             System.err.println("Parsing failed.  Reason: " + e.getMessage());
             formatter.printHelp("VeloEml2PdfCli", options);
