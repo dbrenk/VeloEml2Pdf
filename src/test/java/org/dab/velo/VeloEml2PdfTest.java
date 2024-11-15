@@ -20,6 +20,9 @@ class VeloEml2PdfTest {
         String outputFilePdfPath = FilenameUtils.getBaseName(inputFileEmlPath) + "_" +  new SimpleDateFormat("yyyyMMdd_HH-mm-ss").format(new Date()) + ".pdf";
         Boolean ok = VeloEml2Pdf.convertEml2Pdf(velocityTemplateFilePath, inputFileEmlPath, outputFilePdfPath);
         assertTrue(ok);
+        File outputPdfFile = new File(outputFilePdfPath);
+        assertNotNull(outputPdfFile);
+        assertTrue(outputPdfFile.exists());
     }
 
     @Test
