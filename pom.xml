@@ -33,6 +33,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.dab.cli.VeloEml2PdfCli</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -42,12 +63,6 @@
             <artifactId>flying-saucer-pdf-openpdf</artifactId> <!--instead of  flying-saucer-pdf 9.10.2 -->
             <version>9.1.20</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf
-        <dependency>
-            <groupId>org.xhtmlrenderer</groupId>
-            <artifactId>flying-saucer-pdf</artifactId>
-            <version>9.10.2</version>
-        </dependency>-->
         <dependency>
             <groupId>com.github.librepdf</groupId>
             <artifactId>openpdf</artifactId>
