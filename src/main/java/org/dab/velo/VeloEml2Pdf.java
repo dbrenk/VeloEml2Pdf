@@ -1,7 +1,6 @@
 package org.dab.velo;
 
 import com.lowagie.text.DocumentException;
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.text.StringEscapeUtils;
@@ -11,6 +10,7 @@ import org.apache.velocity.app.VelocityEngine;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import javax.mail.*;
 import javax.mail.internet.MimeMessage;
 
@@ -21,6 +21,10 @@ import org.jsoup.nodes.Document;
 
 
 public class VeloEml2Pdf {
+
+    private VeloEml2Pdf() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      *
@@ -34,17 +38,13 @@ public class VeloEml2Pdf {
     public static Boolean convertEml2Pdf(String velocityTemplateFilePath, String inputFileEmlPath, String outputFilePdfPath) {
         try{
             byte[] inputEml = FileUtils.readFileToByteArray(new File(inputFileEmlPath));
-            String velocityTemplateString = FileUtils.readFileToString(new File(velocityTemplateFilePath), Charsets.UTF_8);
+            String velocityTemplateString = FileUtils.readFileToString(new File(velocityTemplateFilePath), StandardCharsets.UTF_8);
             byte[] outputPdf = VeloEml2Pdf.convertEml2Pdf(velocityTemplateString, inputEml);
             File outputPdfFile = new File(outputFilePdfPath);
             FileUtils.writeByteArrayToFile(outputPdfFile, outputPdf);
-            if(null != outputPdfFile && outputPdfFile.exists()){
-                return true;
-            }else{
-                return false;
-            }
+            return outputPdfFile.exists();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
@@ -84,12 +84,8 @@ public class VeloEml2Pdf {
             outputFilePdf = printHtmlToPdf(sanitizedHtml);
             // return
             return outputFilePdf;
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
+        } catch (MessagingException | IOException | DocumentException e) {
+            return new byte[0];
         }
     }
 

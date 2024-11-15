@@ -4,6 +4,7 @@ import org.dab.velo.VeloEml2Pdf;
 import java.io.File;
 
 public class VeloEml2PdfCli {
+
     /**
      * java -jar veloEml2Pdf-1.0-SNAPSHOT.jar -velocityTemplateFilePath "src/main/resources/emlTemplateV2.html" -inputFileEmlPath "src/main/resources/example-eml-files/mail.eml" -outputFilePdfPath "Test_1.pdf"
      * @param args
@@ -13,21 +14,21 @@ public class VeloEml2PdfCli {
         Options options = new Options();
 
         // Define three required options (a, b, c)
-        options.addOption(Option.builder("velocityTemplateFilePath")
+        options.addOption(Option.builder("t")
                 .longOpt("velocityTemplateFilePath")
                 .desc("First parameter velocityTemplateFilePath (String)")
                 .hasArg()
                 .required()
                 .build());
 
-        options.addOption(Option.builder("inputFileEmlPath")
+        options.addOption(Option.builder("i")
                 .longOpt("inputFileEmlPath")
                 .desc("Second parameter inputFileEmlPath (String)")
                 .hasArg()
                 .required()
                 .build());
 
-        options.addOption(Option.builder("outputFilePdfPath")
+        options.addOption(Option.builder("o")
                 .longOpt("outputFilePdfPath")
                 .desc("Third parameter outputFilePdfPath (String)")
                 .hasArg()
@@ -43,9 +44,9 @@ public class VeloEml2PdfCli {
             CommandLine cmd = parser.parse(options, args);
 
             // Retrieve the values of the required options
-            String velocityTemplateFilePath = cmd.getOptionValue("velocityTemplateFilePath");
-            String inputFileEmlPath = cmd.getOptionValue("inputFileEmlPath");
-            String outputFilePdfPath = cmd.getOptionValue("outputFilePdfPath");
+            String velocityTemplateFilePath = cmd.getOptionValue("t");
+            String inputFileEmlPath = cmd.getOptionValue("i");
+            String outputFilePdfPath = cmd.getOptionValue("o");
 
             // Use the parameters (for demonstration, just printing them)
             System.out.println("Parameter 1 velocityTemplateFilePath: " + velocityTemplateFilePath);
@@ -53,6 +54,7 @@ public class VeloEml2PdfCli {
             System.out.println("Parameter 3 outputFilePdfPath: " + outputFilePdfPath);
 
             Boolean ok = VeloEml2Pdf.convertEml2Pdf(velocityTemplateFilePath, inputFileEmlPath, outputFilePdfPath);
+            System.out.println("conversion finished: " + ok);
 
             System.out.println("finished successfully");
             File out = new File(outputFilePdfPath);
@@ -60,7 +62,7 @@ public class VeloEml2PdfCli {
 
         } catch (ParseException e) {
             // Print an error message if parsing fails
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Parsing failed.  Reason: " + e.getMessage());
             formatter.printHelp("VeloEml2PdfCli", options);
             System.exit(1);
         }

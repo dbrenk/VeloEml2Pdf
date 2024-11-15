@@ -7,15 +7,16 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class EmailUtils {
 
-    public static final Pattern HTML_META_CHARSET_REGEX = Pattern.compile("(<meta(?!\\s*(?:name|value)\\s*=)[^>]*?charset\\s*=[\\s\"']*)([^\\s\"'/>]*)", Pattern.DOTALL);
+    private EmailUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
-     * reads in a byte[] of an .eml file and returns a javax MimeMessage object
+     * Reads in a byte[] of an .eml file and returns a javax MimeMessage object.
      * @param emlBytes
      * @return MimeMessage
      */
@@ -24,10 +25,8 @@ public class EmailUtils {
             ByteArrayInputStream bais = new ByteArrayInputStream(emlBytes);
             Properties properties = new Properties();
             Session mailSession = Session.getDefaultInstance(properties, null);
-            MimeMessage message = new MimeMessage(mailSession, bais);
-            return message;
+            return new MimeMessage(mailSession, bais);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -85,20 +84,18 @@ public class EmailUtils {
     }
 
     public static String getEmailFrom(MimeMessage mimeMessage) throws MessagingException {
-        String from = Arrays.stream(mimeMessage.getFrom())
-                .filter(address -> address instanceof InternetAddress)
+        return Arrays.stream(mimeMessage.getFrom())
+                .filter(InternetAddress.class::isInstance)
                 .map(address -> ((InternetAddress) address).toString())
                 .collect(Collectors.joining("; "));
-        return from;
     }
 
     public static String getEmailTo(MimeMessage mimeMessage) throws MessagingException {
         Address[] recipientsTo = mimeMessage.getRecipients(Message.RecipientType.TO);
-        String to = Arrays.stream(recipientsTo)
-                .filter(address -> address instanceof InternetAddress)
+        return Arrays.stream(recipientsTo)
+                .filter(InternetAddress.class::isInstance)
                 .map(address -> ((InternetAddress) address).toString())
                 .collect(Collectors.joining("; "));
-        return to;
     }
 
     public static String getEmailCC(MimeMessage mimeMessage) throws MessagingException {
@@ -106,11 +103,10 @@ public class EmailUtils {
         if(null == recipientsTo || recipientsTo.length == 0){
             return "";
         }
-        String cc = Arrays.stream(recipientsTo)
-                .filter(address -> address instanceof InternetAddress)
+        return Arrays.stream(recipientsTo)
+                .filter(InternetAddress.class::isInstance)
                 .map(address -> ((InternetAddress) address).toString())
                 .collect(Collectors.joining("; "));
-        return cc;
     }
 
 }
