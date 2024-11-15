@@ -26,9 +26,9 @@ VeloEml2Pdf converts emails from ".eml" format to PDF (Portable Document Format)
 
 for command-line usage you have to add 3 parameters:
 
- * -velocityTemplateFilePath
- * -inputFileEmlPath
- * -outputFilePdfPath
+ * -t or -velocityTemplateFilePath
+ * -i or -inputFileEmlPath
+ * -o or -outputFilePdfPath
 
 
 [source,console]
