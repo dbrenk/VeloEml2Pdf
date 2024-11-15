@@ -31,16 +31,20 @@ public class VeloEml2Pdf {
      * @throws IOException
      * @throws MessagingException
      */
-    public static Boolean convertEml2Pdf(String velocityTemplateFilePath, String inputFileEmlPath, String outputFilePdfPath) throws IOException, MessagingException {
-        byte[] inputEml = FileUtils.readFileToByteArray(new File(inputFileEmlPath));
-        String velocityTemplateString = FileUtils.readFileToString(new File(velocityTemplateFilePath), Charsets.UTF_8);
-        byte[] outputPdf = VeloEml2Pdf.convertEml2Pdf(velocityTemplateString, inputEml);
-        File outputPdfFile = new File(outputFilePdfPath);
-        FileUtils.writeByteArrayToFile(outputPdfFile, outputPdf);
-        if(null != outputPdfFile && outputPdfFile.exists()){
-            return true;
-        }else{
-            return false;
+    public static Boolean convertEml2Pdf(String velocityTemplateFilePath, String inputFileEmlPath, String outputFilePdfPath) {
+        try{
+            byte[] inputEml = FileUtils.readFileToByteArray(new File(inputFileEmlPath));
+            String velocityTemplateString = FileUtils.readFileToString(new File(velocityTemplateFilePath), Charsets.UTF_8);
+            byte[] outputPdf = VeloEml2Pdf.convertEml2Pdf(velocityTemplateString, inputEml);
+            File outputPdfFile = new File(outputFilePdfPath);
+            FileUtils.writeByteArrayToFile(outputPdfFile, outputPdf);
+            if(null != outputPdfFile && outputPdfFile.exists()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -52,33 +56,41 @@ public class VeloEml2Pdf {
      * @throws IOException
      * @throws MessagingException
      */
-    public static byte[] convertEml2Pdf(String velocityTemplateString, byte[] inputFileEml) throws IOException, MessagingException {
-        byte[] outputFilePdf = null;
-        // checks
-        MimeMessage mimeMessage = EmailUtils.readEmlByteArray(inputFileEml);
-        if(null == mimeMessage){
-            throw new MessagingException("could not read eml");
+    public static byte[] convertEml2Pdf(String velocityTemplateString, byte[] inputFileEml){
+        try {
+            byte[] outputFilePdf = null;
+            // checks
+            MimeMessage mimeMessage = EmailUtils.readEmlByteArray(inputFileEml);
+            if(null == mimeMessage){
+                throw new MessagingException("could not read eml");
+            }
+            // build context with all information necessary for velocity
+            VelocityContext context = new VelocityContext();
+            context.put("emailFrom", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailFrom(mimeMessage)));
+            context.put("emailTo", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailTo(mimeMessage)));
+            context.put("emailCC", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailCC(mimeMessage)));
+            context.put("emailSubject", StringEscapeUtils.escapeHtml4(mimeMessage.getSubject()));
+            //start FIX dab 2024-11-14 when trying to add HTML body to pdf without escaping, a SAXParseException is raised, because the <meta> tag is never closed.
+            String bodyText = EmailUtils.getTextFromMimeMessage(mimeMessage);
+            bodyText = bodyText.replaceAll("<meta[^>]*?>", "");
+            context.put("emailText", bodyText);
+            // end fix dab 2024-11-14
+            context.put("mimeMessage", mimeMessage);
+            // combine the template and the context information into an HTML representation
+            String htmlDocument = evaluateVelocityTemplateAndContext(velocityTemplateString, context);
+            // Preprocess the HTML
+            String sanitizedHtml = sanitizeHtml(htmlDocument);
+            // render a pdf from the html
+            outputFilePdf = printHtmlToPdf(sanitizedHtml);
+            // return
+            return outputFilePdf;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
         }
-        // build context with all information necessary for velocity
-        VelocityContext context = new VelocityContext();
-        context.put("emailFrom", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailFrom(mimeMessage)));
-        context.put("emailTo", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailTo(mimeMessage)));
-        context.put("emailCC", StringEscapeUtils.escapeHtml4(EmailUtils.getEmailCC(mimeMessage)));
-        context.put("emailSubject", StringEscapeUtils.escapeHtml4(mimeMessage.getSubject()));
-        //start FIX dab 2024-11-14 when trying to add HTML body to pdf without escaping, a SAXParseException is raised, because the <meta> tag is never closed.
-        String bodyText = EmailUtils.getTextFromMimeMessage(mimeMessage);
-        bodyText = bodyText.replaceAll("<meta[^>]*?>", "");
-        context.put("emailText", bodyText);
-        // end fix dab 2024-11-14
-        context.put("mimeMessage", mimeMessage);
-        // combine the template and the context information into an HTML representation
-        String htmlDocument = evaluateVelocityTemplateAndContext(velocityTemplateString, context);
-        // Preprocess the HTML
-        String sanitizedHtml = sanitizeHtml(htmlDocument);
-        // render a pdf from the html
-        outputFilePdf = printHtmlToPdf(sanitizedHtml);
-        // return
-        return outputFilePdf;
     }
 
     private static String evaluateVelocityTemplateAndContext(String velocityTemplateString, VelocityContext velocityContext) throws IOException, DocumentException {

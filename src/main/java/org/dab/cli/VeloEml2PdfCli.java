@@ -1,10 +1,7 @@
 package org.dab.cli;
 import org.apache.commons.cli.*;
 import org.dab.velo.VeloEml2Pdf;
-
-import javax.mail.MessagingException;
 import java.io.File;
-import java.io.IOException;
 
 public class VeloEml2PdfCli {
     /**
@@ -65,12 +62,6 @@ public class VeloEml2PdfCli {
             // Print an error message if parsing fails
             System.out.println("Error: " + e.getMessage());
             formatter.printHelp("VeloEml2PdfCli", options);
-            System.exit(1);
-        } catch (MessagingException e) {
-            System.out.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
             System.exit(1);
         }
     }
