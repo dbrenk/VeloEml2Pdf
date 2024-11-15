@@ -12,14 +12,10 @@ VeloEml2Pdf converts emails from ".eml" format to PDF (Portable Document Format)
 
 [source,java]
 ----
-    @Test
-    void convertEml2Pdf_Paths() throws IOException, MessagingException {
-        String velocityTemplateFilePath = "src/main/resources/emlTemplateV2.html";
-        String inputFileEmlPath = "example-eml-files/example_mail_200520013502983.eml";
-        String outputFilePdfPath = FilenameUtils.getBaseName(inputFileEmlPath) + "_" +  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".pdf";
-        Boolean ok = VeloEml2Pdf.convertEml2Pdf(velocityTemplateFilePath, inputFileEmlPath, outputFilePdfPath);
-        assert ok : "error";
-    }
+String velocityTemplateFilePath = "src/main/resources/emlTemplateV2.html";
+String inputFileEmlPath = "src/main/resources/example-eml-files/example_mail_200520013502983.eml";
+String outputFilePdfPath = FilenameUtils.getBaseName(inputFileEmlPath) + "_" +  new SimpleDateFormat("yyyyMMdd_HH-mm-ss").format(new Date()) + ".pdf";
+Boolean ok = VeloEml2Pdf.convertEml2Pdf(velocityTemplateFilePath, inputFileEmlPath, outputFilePdfPath);
 ----
 
 === VeloEml2PdfCli - command-line usage
