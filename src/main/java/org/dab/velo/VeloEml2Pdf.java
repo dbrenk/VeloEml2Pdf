@@ -16,6 +16,8 @@ import javax.mail.internet.MimeMessage;
 
 import org.dab.utils.EmailUtils;
 import org.xhtmlrenderer.pdf.ITextRenderer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 
 public class VeloEml2Pdf {
@@ -71,8 +73,10 @@ public class VeloEml2Pdf {
         context.put("mimeMessage", mimeMessage);
         // combine the template and the context information into an HTML representation
         String htmlDocument = evaluateVelocityTemplateAndContext(velocityTemplateString, context);
+        // Preprocess the HTML
+        String sanitizedHtml = sanitizeHtml(htmlDocument);
         // render a pdf from the html
-        outputFilePdf = printHtmlToPdf(htmlDocument);
+        outputFilePdf = printHtmlToPdf(sanitizedHtml);
         // return
         return outputFilePdf;
     }
@@ -94,6 +98,12 @@ public class VeloEml2Pdf {
             renderer.createPDF(os);
             return os.toByteArray();
         }
+    }
+
+    public static String sanitizeHtml(String html) {
+        Document document = Jsoup.parse(html);
+        document.outputSettings().syntax(Document.OutputSettings.Syntax.xml); // Force XHTML
+        return document.html();
     }
 
 }

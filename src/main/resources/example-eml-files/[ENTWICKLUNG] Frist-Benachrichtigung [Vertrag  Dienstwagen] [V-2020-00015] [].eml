@@ -1,18 +1,18 @@
 Return-Path: noreply@examplebank.de
-Received: from B-BRENK.SER.NET (kubernetes.docker.internal [127.0.0.1])
+Received: from USER.EXAMPLE.COM (kubernetes.docker.internal [127.0.0.1])
 	by B-BRENK with ESMTP
 	; Thu, 30 Jul 2020 09:15:33 +0200
 Date: Thu, 30 Jul 2020 09:15:33 +0200 (CEST)
-From: DOXiS Postkorb <noreply@examplebank.de>
-To: admin@brenk.local
-Message-ID: <1155604898.15.1596093333867@B-BRENK.SER.NET>
+From: System Postkorb <noreply@examplebank.de>
+To: admin@user.local
+Message-ID: <1155604898.15.1596093333867@USER.EXAMPLE.COM>
 Subject: [ENTWICKLUNG] Frist-Benachrichtigung [Vertrag: Dienstwagen]
  [V-2020-00015] []
 MIME-Version: 1.0
 Content-Type: text/html; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 
-<html><head><meta charset="utf-8"><style>body {font-family: Arial; font-size: 13px; font-weight: normal}table {font-family: Arial; font-size: 13px; font-weight: normal; border: none; border-collapse: collapse; margin: 0px; padding: 2px 5px 2px 5px}table tr th {border: none; background-color: #C0C0E0; font-weight: bold; margin; text-align: left}table tr td.even {border: none; background-color: #D8D8D8; font-weight: normal; text-align: left}table tr td.odd {border: none; background-color: #FFFFFF; font-weight: normal; text-align: left}a {text-decoration: none}</style></head><body><p>Liebe Kollegin, lieber Kollege,</p><p>bei folgendem Vertrag wurde ein Benachrichtigungsdatum erreicht: </p><p><a href="iecm://9bd57183-621d-49af-97ab-f2c64ec5050a@b-berlinhyp2-vm.ser.net:8080/e9ad4b49-771b-4152-85f4-94ac8b7007c0/SR0cVERTRAGSAKTE249ad50cf9-8be9-4df2-bb6d-267760270d02182020-07-15T17%3A42%3A33.061Z011.csb"><b>Zum Vorgang</b></a></p><br>
+<html><head><meta charset="utf-8"><style>body {font-family: Arial; font-size: 13px; font-weight: normal}table {font-family: Arial; font-size: 13px; font-weight: normal; border: none; border-collapse: collapse; margin: 0px; padding: 2px 5px 2px 5px}table tr th {border: none; background-color: #C0C0E0; font-weight: bold; margin; text-align: left}table tr td.even {border: none; background-color: #D8D8D8; font-weight: normal; text-align: left}table tr td.odd {border: none; background-color: #FFFFFF; font-weight: normal; text-align: left}a {text-decoration: none}</style></head><body><p>Liebe Kollegin, lieber Kollege,</p><p>bei folgendem Vertrag wurde ein Benachrichtigungsdatum erreicht: </p><p><a href="example.com/notareallink"><b>Zum Vorgang</b></a></p><br>
 <h2>Vertrag: Dienstwagen</h2>
 <table>
     <tr>
